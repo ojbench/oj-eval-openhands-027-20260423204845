@@ -35,7 +35,7 @@ TokenStream Lexer::tokenize(const std::string& line) const {
     if (isLetterChar(ch)) {
       int start = column;
       ++column;
-      while (column < line.size() && isLetterChar(line[column])) {
+      while (column < line.size() && (isLetterChar(line[column]) || isNumberChar(line[column]))) {
         ++column;
       }
       std::string text = line.substr(start, column - start);
@@ -119,7 +119,7 @@ bool Lexer::isLetterChar(char ch) noexcept {
 }
 
 bool Lexer::isNumberChar(char ch) noexcept {
-  return std::isalnum(static_cast<unsigned char>(ch)) || ch == '_';
+  return std::isdigit(static_cast<unsigned char>(ch));
 }
 
 TokenType Lexer::matchKeyword(const std::string& text) noexcept {
